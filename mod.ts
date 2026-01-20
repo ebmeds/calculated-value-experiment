@@ -42,22 +42,35 @@ const makeServiceCall = (observations: Observation[]) => ({
   },
 });
 
-const body = makeServiceCall([
-  { value: 4.2, dateTime: "2025-12-12" },
-  { value: 4.3, dateTime: "2026-01-01" },
-]);
+const testA: Observation[] = [
+  { value: 0.0, dateTime: "2024-06-01" },
+  { value: 0.0, dateTime: "2024-12-01" },
+  { value: 0.1, dateTime: "2025-06-01" },
+  { value: 0.2, dateTime: "2025-12-01" },
+];
 
-console.log(JSON.stringify(body, null, 2));
+const testB: Observation[] = [
+  { value: 2.4, dateTime: "2024-06-01" },
+  { value: 2.5, dateTime: "2024-12-01" },
+  { value: 3.9, dateTime: "2025-06-01" },
+  { value: 8.2, dateTime: "2025-12-01" },
+];
 
-const res = await fetch(
-  Deno.args[0],
-  {
-    method: "POST",
-    body: JSON.stringify(body),
-    headers: {
-        'Content-Type': "application/json"
-    }
-  },
-);
+const tests = [testA, testB];
 
-console.log(res);
+for (const test of tests) {
+  const res = await fetch(
+    Deno.args[0],
+    {
+      method: "POST",
+      body: JSON.stringify(makeServiceCall(test)),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    },
+  );
+
+  const json = await res.json();
+  console.log(test);
+  console.log(json);
+}
