@@ -14,7 +14,7 @@ const makeMeasurement = (value: number, dateTime: string) => ({
     ],
   },
   "subject": {
-    "reference": "Patient/123",
+    "reference": "Patient/123", // technical ID that doesn't actually resolve!
   },
   "effectiveDateTime": z.iso.date().parse(dateTime),
   "valueQuantity": {
@@ -29,7 +29,7 @@ const makeServiceCall = (observations: Observation[]) => ({
   "hook": "patient-view",
   "hookInstance": crypto.randomUUID(),
   "context": {
-    "patientId": "Patient/123",
+    "patientId": "Patient/123", // technical ID that doesn't actually resolve!
   },
   "prefetch": {
     "psa-time-series": {
